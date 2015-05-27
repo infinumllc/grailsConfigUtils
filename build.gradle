@@ -1,0 +1,39 @@
+apply plugin: 'eclipse'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'codenarc'
+
+group = 'com.infinum.grails'
+version = '0.1.0'
+
+sourceCompatibility=1.7
+targetCompatibility=1.7
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
+dependencies {
+	compile 'org.codehaus.groovy:groovy-all:2.0.8'
+	testCompile 'junit:junit:4.10','log4j:log4j:1.2.17'
+}
+
+
+codenarc.toolVersion = '0.21'
+codenarc.configFile = file('config/codenarc/codenarc.groovy')
+codenarc.ignoreFailures = true
+tasks.withType(CodeNarc) {
+	reports {
+		xml.enabled = true
+		html.enabled = true
+	}
+}
