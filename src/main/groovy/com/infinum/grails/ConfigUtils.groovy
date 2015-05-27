@@ -17,17 +17,28 @@ class ConfigUtils {
 	}
 
 		configLocations.each{String configFilePath ->
-			if(configFilePath.startsWith('file:')){
-				String fileSystemPath = configFilePath - 'file:'
-				if(new File(fileSystemPath).exists()){
-					println "Found external config file: $configFilePath"
-				}else if(new File(fileSystemPath + '.txt').exists()){
-					println "The file $configFilePath does not exist, but ${configFilePath}.txt DOES exist.  I'll let you decide what to do with it.  Perhaps you would like to curse windows?"
-				}else{
-					println "Could not find external config file: $configFilePath"
-				}
-			}
+			verifyConfigExists(configFilePath)
 		}
+	}
+	
+	static boolean verifyConfigExists(String configFilePath){
+		boolean exists = false
+		
+		if(configFilePath.startsWith('file:')){
+			String fileSystemPath = configFilePath - 'file:'
+			if(new File(fileSystemPath).exists()){
+				println "Found external config file: $configFilePath"
+				exists = true
+			}else if(new File(fileSystemPath + '.txt').exists()){
+				println "The file $configFilePath does not exist, but ${configFilePath}.txt DOES exist.  I'll let you decide what to do with it.  Perhaps you would like to curse windows?"
+			}else{
+				println "Could not find external config file: $configFilePath"
+			}
+		}else{
+			println "Unable to verify existence of config file at location: $configFilePath.  I can only validate locations that start with 'file:'"
+		}
+		
+		return exists
 	}
 	
 	/**
