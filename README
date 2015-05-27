@@ -1,0 +1,15 @@
+Install with:
+gradle install
+
+In your Grails project, add this project as a dependency in your BuildConfig.groovy.  
+
+One of the feature provided is a detection of external configs.  To use it, put the ConfigUtils.verifyExternalConfigs static method in your Config.groovy to print a message to stdout regarding whether your external configuration file was found.
+
+Just call in grails-app/conf/Config.groovy after 
+grails.config.locations = [...]
+ConfigUtils.verifyExternalConfigs(grails.config.locations)
+
+Be sure to set the Import for ConfigUtils in your Config.groovy
+
+
+
